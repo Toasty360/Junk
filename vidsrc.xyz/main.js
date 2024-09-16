@@ -137,19 +137,23 @@ const decryptMethods = {
   },
 
   sXnL9MQIry: (inputString) => {
-    const slicedString = inputString.slice(10, -16);
-    const key = '3SAY~#%Y(V%>5d/Yg"$G[Lh1rK4a;7ok';
-    const decodedString = atob(slicedString);
-    const repeatedKey = key
-      .repeat(Math.ceil(decodedString.length / key.length))
-      .substring(0, decodedString.length);
-    let result = "";
-    for (let i = 0; i < decodedString.length; i++) {
-      result += String.fromCharCode(
-        decodedString.charCodeAt(i) ^ repeatedKey.charCodeAt(i)
+    const xorKey = "pWB9V)[*4I`nJpp?ozyB~dbr9yt!_n4u";
+    let decrypted = "";
+    const hexDecoded = inputString
+      .match(/.{1,2}/g)
+      .map((hex) => String.fromCharCode(parseInt(hex, 16)))
+      .join("");
+    for (let i = 0; i < hexDecoded.length; i++) {
+      decrypted += String.fromCharCode(
+        hexDecoded.charCodeAt(i) ^ xorKey.charCodeAt(i % xorKey.length)
       );
     }
-    return result;
+    let shifted = "";
+    for (let i = 0; i < decrypted.length; i++) {
+      shifted += String.fromCharCode(decrypted.charCodeAt(i) - 3);
+    }
+
+    return atob(shifted);
   },
 
   JoAHUMCLXV: (inputString) => {
@@ -160,6 +164,22 @@ const decryptMethods = {
     const shift = 3;
     for (let i = 0; i < decodedString.length; i++) {
       result += String.fromCharCode(decodedString.charCodeAt(i) - shift);
+    }
+    return result;
+  },
+  KJHidj7det: (input) => {
+    const decoded = atob(input.slice(10, -16));
+    const key = '3SAY~#%Y(V%>5d/Yg"$G[Lh1rK4a;7ok';
+
+    const extendedKey = key
+      .repeat(Math.ceil(decoded.length / key.length))
+      .substring(0, decoded.length);
+
+    let result = "";
+    for (let i = 0; i < decoded.length; i++) {
+      result += String.fromCharCode(
+        decoded.charCodeAt(i) ^ extendedKey.charCodeAt(i)
+      );
     }
     return result;
   },
@@ -199,10 +219,10 @@ fetchSource();
 // ux8qjPHC66 = faild == working
 // xTyBxQyGTA = faild == working
 // IhWrImMIGL = done == working
-// o2VSUnjnZl
+// o2VSUnjnZl = done == working
 // eSfH1IRMyL = faild == working
 // Oi3v1dAlaM = faild (contains - and _) == working
-
+// sXnL9MQIry = done == working
 // JoAHUMCLXV = faild == working
-// KJHidj7det = faild
-// sXnL9MQIry = faild = faild
+
+// KJHidj7det = faild == working

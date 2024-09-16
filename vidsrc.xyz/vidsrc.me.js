@@ -106,7 +106,6 @@ function anotherDecryption(inputString) {
   return result;
 }
 function xorDecryption(inputString) {
-  const reverseString = inputString.split("").reverse().join("");
   const xorKey = "pWB9V)[*4I`nJpp?ozyB~dbr9yt!_n4u";
   let decrypted = "";
 
@@ -143,13 +142,30 @@ function splitAndReverseChunks(inputString) {
   // Reverse the chunks and join them into a single string
   return chunks.reverse().join("");
 }
+const KJHidj7det = (input) => {
+  const decoded = atob(input.slice(10, -16));
+  const key = '3SAY~#%Y(V%>5d/Yg"$G[Lh1rK4a;7ok';
+  const extendedKey = key
+    .repeat(Math.ceil(decoded.length / key.length))
+    .substring(0, decoded.length);
+
+  let result = "";
+  for (let i = 0; i < decoded.length; i++) {
+    result += String.fromCharCode(
+      decoded.charCodeAt(i) ^ extendedKey.charCodeAt(i)
+    );
+  }
+  return result;
+};
 (async () => {
   var urlHash =
     "eqqmp://qjpqo2.irjfklrppqobxjexsbk.zlj/pqobxj_kbt2/E4pFXXXXXXXXXt3Kv3HZJYeX4ScHOOgQmWSIqVhAYDHvZ_uVKFij1KxYm6_oJ_LaCxKoPtfphxTJlKTmE9FQLnR9XNmgdg9p5i49apQh.g7JAtnCl6GdHcaDS4NagBrJhrITwp9xYKZnjuWImwZdvzfgM3bUUFjXivEhjvyALOQuGsAMyDkRzqpjkDXfJydn7KFek1G.Wl0KMjn30vWJvO497wG41WcuzttpzfGlmbZM4_mlkKYKFWNJNllZEr_Ey0agSS9o_I2V5K22dMwohDSFUMv1wUveEFr23AuJq4jv25kO8Oc4PzZiF_yl5WeEs6acv9qzbqRO4_GDUbr2wsNJmNizMN2NTFHInGTF_NLAAjErNNBXXX--/jxpqbo.j3r8";
   var hash =
-    "Dqw6nfuzf7Wyc1KQ0ZCnZcO1ZKR1YBNRJPTSk0ORtCBjlRAFZfDh1WPW86EU4KKlwkQF9YO0E8EBALD28/IXAzCnUgenYuKkRgEQ5PaGEUagdkDnZUQwwpZhA2DzsrfxkNdzJrY0EqUTAlGhdkYRF8JlFpV1ZKET1YSy0RH0ZZMSgMUUxxWDlAGQUNTERwKhAbVWRZV2prKVR1JRkpPGAmEUMofQYGBX46CjhJG0c+QBlIW1IBQTMBa00tDi5ZRyd8YxRKXhY+eSM2IxxmQWAYEXVGYSZrEjFrVA4eCDxBPSRsDUFbKhkDEAQhH21XDkksXEx5Jhc3NkFRDWk/H1MfKloLA38mHgd9NTI8UlAsbwJuU308W2ANSV0gCD04S0svWlcNcjxefxsxGDVNQjphMn8MVFJDOld9XA0yEyV1BT5cD0xmLFxmIScbT2VJNVgJemhECH8BIRRDHgk7O0UXOgYlSGIGBWZkIg8qTn8SdwlAT28PWzU0TlYJOhsgfwEDVU9NfCBFazIFEy5sdjMZeG5MAwodFiBSSjMTGwVZAnlDMRVaOw9SCQMYL2JkdkU3VkpQFgE0VFcc6DmsEYr6iw3UakbA";
+    "Dqw6nfuzf7Wyc1KQ0ZCnZcO1ZKR1YBNRJPTSk0ORtCBjlRAFZfDh1WPW86EU4KKlwkQF9YO0E8EBALD28/IXAzCnUgenYuKkRgDg5NaGYUagdkDnZUQwkpdhQ1bh4LXgIRbSx3XCYNBxsQDBVhTj9qAHxYY1duNDNMUS4pIiUDNhxGMgloKQV3BHBuDEVLPHhgYk1WFV0aP1FePS0tCX4iEWwUCF4jHlY2ID4dG3MxfC59RGBWZGE+ZGAJbTohaR8kWyhyBQ4eASEnN01VExRRBhVUBzBtLx0QaitrATF/OAd1Kkp/BSJLPSZvRkRNF0w/T1BRCUYKLk1tMA8tJ1M1CXJYX2Y+A388Dx0UTmcuTTFBbWMSdQ8DW3sUEypffTspUClvRFkNcR8IMxkXSx9FBU1qBVZZHz0XFTVpJy8JAxpTIn5FLRJhFnEXJ3dVHW0zUwlDHGM+F1pvczMpBVxAAXoCDn4lO0I/KW45VXcVTThXT3gzYGgTZ3ERMj0GYx8NRVMIAjw6RgkHEjQTEyxbZElQRFIdPElncz0iGiZlRCF8Cwl+B1xxfSIOE1dmCHkTZH90SQJ2CkNXMz4+RlxBPgw=6DmsEYr6iw3UakbA";
+
   //   var url = simpleSubstitutionCipher(s);
-  console.log(yetAnotherDecryption(hash));
+
+  console.log(KJHidj7det(hash));
 })();
 
 //   var darta = await (
