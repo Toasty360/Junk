@@ -1,0 +1,47 @@
+{
+  "component": "Player",
+  "props": {
+    "errors": {},
+    "auth": { "user": null },
+    "ziggy": {
+      "url": "https://unequaled-toothbrush.cdnmovies-stream.online",
+      "port": null,
+      "defaults": [],
+      "routes": {
+        "sanctum.csrf-cookie": {
+          "uri": "sanctum/csrf-cookie",
+          "methods": ["GET", "HEAD"]
+        },
+        "ignition.healthCheck": {
+          "uri": "_ignition/health-check",
+          "methods": ["GET", "HEAD"]
+        },
+        "ignition.executeSolution": {
+          "uri": "_ignition/execute-solution",
+          "methods": ["POST"]
+        },
+        "ignition.updateConfig": {
+          "uri": "_ignition/update-config",
+          "methods": ["POST"]
+        }
+      },
+      "location": "https://unequaled-toothbrush.cdnmovies-stream.online/content/b3d357f5398bc67aba223b435f756357/iframe"
+    },
+    "trailer": false,
+    "player_file": "player-660be093651b1.js",
+    "disable_ad": false,
+    "referer": "content.kinoprofi.club",
+    "plstart": null,
+    "poster": "https://images.cdnmovies.net/screens/b3d357f5398bc67aba223b435f756357/1/large.webp and https://images.cdnmovies.net/screens/b3d357f5398bc67aba223b435f756357/2/large.webp and https://images.cdnmovies.net/screens/b3d357f5398bc67aba223b435f756357/3/large.webp and https://images.cdnmovies.net/screens/b3d357f5398bc67aba223b435f756357/4/large.webp and https://images.cdnmovies.net/screens/b3d357f5398bc67aba223b435f756357/5/large.webp",
+    "data_next": "[]",
+    "default_quality": 360,
+    "content": {
+      "id": "b3d357f5398bc67aba223b435f756357",
+      "ru_title": "\u0411\u0430\u0431\u0430 \u042f\u0433\u0430 \u0441\u043f\u0430\u0441\u0430\u0435\u0442 \u043c\u0438\u0440",
+      "year": "2023"
+    },
+    "player": "#2W3sidGl0bGUiOiLQntGA0LjQs9C40L3QsNC7ICjQoNGD0YHRgdC60LjQuSkiLCJma//d05wMndCVE5jUFJRdlRDMF9DcHhDc3FfOFQxdTlRWxlIjoiWzI0MHBdaHR0cHM6XC9cL3N1bmRiLm5sXC9hMDBiYWQzZGEz//UnlUd3RmMTVfR0xFc1h4bnBVNExqamQwUmVZLVZIOTdhN2M2NTQxN2VjYmE0OWJmMTIxNzoyMDI0MDQwNjAxXC9tb3ZpZXNcLzg4ZWE4ZDM4MTFmMGNmN2YwMDAxZGU4MzUyN2Q1ZGEzNjEzZGU0MWZcLzI0MC5tcDQ6aGxzOm1hbmlmZXN0Lm0zdTgsWzM2MHBdaHR0cHM6XC9cL3N1bmRiLm5sXC9hYzNkYjIxMGIxZDllYzMxZTJkNjhhYTRiMzEyNWE2MzoyMDI0MDQwNjAxXC9tb3ZpZXNcLzg4ZWE4ZDM4MTFmMGNmN2YwMDAxZGU4MzUyN2Q1ZGEzNjEzZGU0MWZcLzM2MC5tcDQ6aGxzOm1hbmlmZXN0Lm0zdTgsWzQ4MHBdaHR0cHM6XC9cL3N1bmRiLm5sXC9lMDY1YTMyOThhODhjZWViNmVjMDMzODc1MTY5YTRhYjoyMDI0MDQwNjAxXC//a3p1T1lRcUJfUVNPTC14ek5fS3oza2tna0hoSGl09tb3ZpZXNcLzg4ZWE4ZDM4MTFmMGNmN2YwMDAxZGU4MzUyN2Q1ZGEzNjEzZGU0//Ni14UVdNaDdlcnRMcDh0X005aHVVRGsxTTBWcllKMWZcLzQ4MC5tcDQ6aGxzOm1hbmlmZXN0Lm0zdTgsWzcyMHBdaHR0cHM6XC9cL3N1bmRiLm5sXC80N2NhZjM0NTY0MjRhYmI2NmFlMzBjMzdlMzkwMTRhZToyMDI0MDQwNjAxXC9tb3ZpZXNcLzg4ZWE4ZDM4MTFmMGNmN2YwMDAxZGU4MzUyN2Q1ZGEzNjEzZGU0MWZcLzcyMC5tcDQ6aGxzOm1hbmlmZXN0Lm0zdTgsWzEwODBwXWh0dHBzOlwvXC9zdW5kYi5ubFwvNDdjYWYzNDU2NDI0YWJiNjZhZTMwYzM3ZTM5MDE0YWU6MjAyNDA0MDYwMVwvbW92aWVzXC84OGVhOGQzOD//bWQtT2QyRzlSV09nU2E1SG9CU1NiV3JDeUlxUXlZExZjBjZjdmMDAwMWRlODM1MjdkNWRhMzYxM2RlNDFmXC83MjAubXA0OmhsczptYW5pZmVzdC5tM3U4LCIsInRodW1ibmFpbHMiOm51bGwsInN1YnRpdGxlIjpudWxsfV0="
+  },
+  "url": "/content/b3d357f5398bc67aba223b435f756357/iframe",
+  "version": "e2db7fdec8b85ba8fdb06e0a2c2296b2"
+}

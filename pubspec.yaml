@@ -1,0 +1,9 @@
+name: scraping
+description: ""
+dependencies:
+  dio:
+  html:
+  encrypt:
+
+environment:
+  sdk: "^3.2.0"
