@@ -4,6 +4,8 @@ dependencies:
   dio:
   html:
   encrypt:
+  http: ^1.2.0
+  cryptography: ^2.7.0
 
 environment:
   sdk: "^3.2.0"

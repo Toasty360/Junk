@@ -1,2 +1,11 @@
-.dart_tool
-node_modules
+# Ignore everything
+*
+
+# Don't ignore these directories/files
+!.gitignore
+!Completed/
+!package.json
+!package-lock.json
+!pnpm-lock.yaml
+!pubspec.lock
+!pubspec.yaml
