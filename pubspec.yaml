@@ -1,0 +1,13 @@
+name: scraping
+description: ""
+dependencies:
+  dio:
+  html:
+  encrypt:
+  archive:
+  http: ^1.2.0
+  cryptography: ^2.7.0
+  puppeteer: ^3.6.0
+
+environment:
+  sdk: "^3.2.0"

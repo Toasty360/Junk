@@ -1,0 +1,9 @@
+# Ignore everything
+
+trash
+.dart_tool
+.vscode
+Incomplete
+workspace
+node_modules
+.env
