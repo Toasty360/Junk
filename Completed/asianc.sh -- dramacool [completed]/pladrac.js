@@ -14,8 +14,6 @@ const GenerateParams = async (msg) => {
 
 const GetM3U8 = async (hash) => {
   var requestData = await GenerateParams(hash);
-  console.log(requestData);
-
   return JSON.parse(
     CryptoJS.enc.Utf8.stringify(
       CryptoJS.AES.decrypt(
@@ -33,11 +31,12 @@ const GetM3U8 = async (hash) => {
 
 const main = async () => {
   // var id = "the-impossible-heir-2024-episode-8";
-  var id = "vincenzo-2021-episode-1";
+  var id = "no-way-out-the-roulette-2024-episode-8";
 
-  var resp = await (await fetch("https://asianc.sh/" + id + ".html")).text();
+  var resp = await (await fetch("https://asianc.co/" + id + ".html")).text();
+
   var presp = await (
-    await fetch("https:" + resp.match(/src="([^"]*asianbxkiun[^"]*)"/)[1])
+    await fetch("https:" + resp.match(/iframe.*src=['"](.*?)['"].*iframe>/)[1])
   ).text();
   var data = await GetM3U8(presp.match(/data-value="(.*)"/)[1]);
   console.log(data);

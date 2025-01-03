@@ -1,3 +1,6 @@
+//c8nlik7frb4l21nr014vvtwi
+const baseurl = "https://d0000d.com/";
+
 function makePlay() {
   for (
     var a = "",
@@ -8,62 +11,21 @@ function makePlay() {
     o++
   )
     a += t.charAt(Math.floor(Math.random() * n));
-  return a + "?token=c8nlik7frb4l21nr014vvtwi&expiry=" + Date.now();
+
+  //? maybe token is dynamically generated. need to check.
+  //! It has Cloudflare Turnstile.
+  return a + "?token=urcodesucks&expiry=" + Date.now();
 }
 
-const baseurl = "https://d0000d.com/";
-
-const fetchm3u8 = async (id) => {
-  fetch(baseurl + id)
-    .then((r) => r.text())
-    .then((data) => {
-      fetch(
-        baseurl + "/pass_md5/" + /\$.get\('\/pass_md5\/([^']+)'/.exec(data)[1],
-        {
-          headers: {
-            Referer: baseurl,
-          },
-        }
-      )
-        .then((r) => r.text())
-        .then((data) => {
-          console.log({
-            src: data + makePlay(),
-            Referer: baseurl,
-          });
-        });
-    });
-};
-// fetchm3u8("/e/1kih2jr7oq11");
-//azm.to only movies
-
-// var CSRF_TOKEN = "m0PU2q0QW8BP9xZc3LynptAiCbY4ePJjxnKpPbtY";
-// var link =
-//   "CRUVERJbTk4FEwgXBE8GDg4GDQRPAg4MTg4RBA9eCAVcUA07BQgjJDMxDwoyJTssFzIZN1FWBiwpKzRYKyoNVFk0HQkYBRMAGQ==";
-
-// fetch("https://ww1.streamm4u.com/anhjax", {
-//   method: "POST",
-//   headers: {
-//     "Content-Type": "application/x-www-form-urlencoded",
-//   },
-//   body:
-//     "_token=" +
-//     encodeURIComponent(CSRF_TOKEN) +
-//     "&m4u=" +
-//     encodeURIComponent(link),
-// })
-//   .then(function (response) {
-//     return response.text();
-//   })
-//   .then(function (dataReturn) {
-//     console.log(dataReturn);
-//   })
-//   .catch(function (error) {
-//     console.error("Error:", error);
-//   });
-
 const fetchData = async (id) => {
-  var resp = await (await fetch(baseurl + id)).text();
+  var resp = await (
+    await fetch(baseurl + id, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+      },
+    })
+  ).text();
   eval(/function\s+makePlay\(\)\s*{[^}]*}/.exec(resp)[0]);
   fetch(
     baseurl + "/pass_md5/" + /\$.get\('\/pass_md5\/([^']+)'/.exec(resp)[1],
@@ -81,4 +43,4 @@ const fetchData = async (id) => {
       });
     });
 };
-fetchData("/e/s1hp5q6djyim");
+fetchData("/e/uc28xb0bvj3p");

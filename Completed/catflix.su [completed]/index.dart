@@ -30,7 +30,8 @@ class Catflix {
   }
 
   Future<void> getSource() async {
-    final iframeResponse = await dio.get('${baseUrl}/movies/the-well/');
+    final iframeResponse =
+        await dio.get('${baseUrl}/episodes/the-originals-1x3');
     final String iframeUrl = RegExp(r'<iframe.*?src\s*=\s*"(.*?)"')
         .firstMatch(iframeResponse.data)!
         .group(1)!;
@@ -58,7 +59,7 @@ class Catflix {
       'url': decryptHexWithKey(jsonDecode(theJuiceResponse.data)["data"],
           jsonDecode(multipleResp[0].data)["juice"]),
       'provider': 'Catflix',
-      'headers': {'Origin': iframeUrl.split('embed')[0]},
+      'headers': {'Referer': iframeUrl.split('embed')[0], "Origin": baseUrl},
     };
 
     print(source);

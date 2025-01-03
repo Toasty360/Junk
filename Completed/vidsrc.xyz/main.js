@@ -1,6 +1,13 @@
 import { load } from "cheerio";
 class videosrc {
   baseURL = "https://vidsrc.xyz/embed/";
+  headers = {
+    "User-Agent":
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+    Referer: "https://vidsrc.xyz/",
+    Cookie:
+      "cf_clearance=.ETqVYe_FZLnbOzmCPOUvrx2DGabjWThjSYwQwoE5KI-1735449830-1.2.1.1-Alc2nlYHXWpywJaG5fOlT0fGfkuDI_aRf6ziN.2Eu7s8m8D_B3.iq.rZhoGH__CJB8fQVSDMnzo5LsNiJcpVoLZ8NhZpK_WqaSwVcQRTtPvuxnCfikmcFI3pMlhvtI1Q_Dg9CzJDRMuMboJ60zDUa2QIdI1YDMmnVOXfeIaNILBeY8RE_Wwme51VxonzzJY6d6GOZ3191w_dtil.gweBizdrlELAQiuhEmD406FcaViAie8DIA.gEIsdoMlztnUSOtYq4I9BalsYXR3NdhcLZhOAr3jibu.B.LJnIa2WeMdGo5G7PLpFgEF4jU9EsEnOtqD5yATCV3anSD.SGXCGP7NF3S8Kw3pt5njVpM6OpIA",
+  };
   _decryptMethods = {
     TsA2KGDGux: (inputString) => {
       const reversedString = inputString.split("").reverse().join("");
@@ -219,40 +226,55 @@ class videosrc {
   };
 
   fetchSource = async (id, type, sid, eid) => {
-    var url =
-      this.baseURL +
-      (type != "TV"
-        ? `movie?tmdb=${id}`
-        : `tv?tmdb=${id}?season=${sid}&episode=${eid}`);
+    var url = `${this.baseURL}${
+      type != "TV"
+        ? `movie?${id.startsWith("tt") ? "imdb" : "tmdb"}=${id}`
+        : `tv?${
+            id.startsWith("tt") ? "imdb" : "tmdb"
+          }=${id}&season=${sid}&episode=${eid}`
+    }`;
 
     const urlRCP = await fetch(url)
       .then((resp) => resp.text())
-      .then((resp) => "https:" + resp.match(/src="(.*?)"/)[1]);
+      .then((resp) => {
+        let match = resp.match(/src="(.*?)"/)[1];
+        if (match == undefined || match == "") {
+          throw new Error("No source found");
+        }
+        if (match.startsWith("http")) return match;
+        else if (match.startsWith("/embed"))
+          return this.baseURL.split("/embed")[0] + match;
+        else return "https:" + match;
+      });
 
+    //! Enabled turnstile
     const urlPRORCP = await fetch(urlRCP, {
-      headers: { Referer: url },
+      headers: { ...this.headers, Referer: url },
     })
       .then((resp) => resp.text())
       .then(async (resp) => {
-        return urlRCP.split("rcp")[0] + resp.match(/src.*'(.*?)'/)[1];
+        console.log(resp);
+        return (
+          urlRCP.split("rcp")[0] + resp.match(/src.*['"](\/prorcp.*?)['"]/)[1]
+        );
       });
 
     const encryptedURLNode = await fetch(urlPRORCP, {
       headers: {
+        ...this.headers,
         Referer: urlRCP,
       },
     })
       .then((resp) => resp.text())
       .then((text) => {
-        if (text.includes("Playerjs")) {
-          return { id: "playerjs", content: text.match(/"(#9.*?)"/)[1] };
+        var temp = text.match(/Playerjs\({.*file:"(.*?)",.*?}\)/)?.[1];
+        if (temp != undefined && temp != "") {
+          return { id: "playerjs", content: temp };
         }
         const $ = load(text);
         const node = $("#reporting_content").next();
         return { id: node.attr("id"), content: node.text() };
       });
-    console.log(encryptedURLNode);
-
     var source = {
       source: this._decryptMethods[encryptedURLNode.id](
         encryptedURLNode.content
@@ -264,8 +286,8 @@ class videosrc {
     return source;
   };
 }
-new videosrc().fetchSource(1215162, "MOVIE");
-// new videosrc().fetchSource("tt5180504", "TV", 1, 2);
+// new videosrc().fetchSource(1241982, "MOVIE");
+new videosrc().fetchSource("tt5180504", "TV", 1, 2);
 // new videosrc().fetchSource("tt6263850", "MOVIE");
 
 // TsA2KGDGux = faild == working;
@@ -320,3 +342,6 @@ new videosrc().fetchSource(1215162, "MOVIE");
 //   }
 //   return sources;
 // };
+
+// https://vidsrc.xyz/embed/tv?imdb=tt5180504?season=1&episode=2
+// https://vidsrc.xyz/embed/tv?imdb=tt5180504&season=1&episode=1&color=e600e6

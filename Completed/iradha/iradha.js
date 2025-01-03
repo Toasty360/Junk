@@ -1,6 +1,9 @@
-import { load } from "cheerio";
+//? Best indian movie site.
 
-const baseURL = "https://www.iradha.dev/";
+import { load } from "cheerio";
+const baseURL = "https://lxc.0ott.com/";
+
+const proxy = "http://localhost:3000/proxy?url=";
 
 const ibommaSrc = async (id) => {
   const r = await fetch(baseURL + id);
@@ -10,19 +13,27 @@ const ibommaSrc = async (id) => {
   const r2 = await fetch(iframe, {
     headers: {
       Referer: baseURL,
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.142.86 Safari/537.36",
     },
   });
-
   var data = {
     m3u8: /file\s*:\s*['"]([^'"]*)['"]/.exec(await r2.text())[1],
-    referer: "https://ib22-4-ind2k--api.c19.space/",
+    referer: new URL(iframe).origin,
   };
-  console.log(data);
+  //! need cors proxy duh
+  console.log(
+    proxy +
+      btoa(data.m3u8) +
+      "&headers=" +
+      btoa(JSON.stringify({ referer: data.referer }))
+  );
   return data;
 };
-ibommaSrc("hd-n2djv/ctrl-2024-lyu4p-telugu-movie-watch-online.html");
+ibommaSrc("hd-n2djv/marco-2024-u7xnz-hindi-movie-watch-online.html");
 
 const getHomeMovies = async (url) => {
+  const baseURL = "https://lxc.0ott.com/";
   const r = await fetch(baseURL + url);
   const v = await r.text();
 

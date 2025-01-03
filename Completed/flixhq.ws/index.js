@@ -46,3 +46,4 @@ const getSource = async (id) => {
 
 // getSource("movie/deadpool-wolverine-06597/");
 getSource("series/the-lord-of-the-rings-the-rings-of-power-11963/2-1/");
+//! [Done] exited with code=0 in 4.151 seconds WTH

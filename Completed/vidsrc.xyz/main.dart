@@ -188,14 +188,13 @@ final Map decryptMethods = {
 
 // Fetch source function
 Future<String> fetchSource(id) async {
-  final response = await Dio().get('https://vidsrc.net/embed/$id');
+  final response = await Dio().get('https://vidsrc.me/embed/$id');
   final source = response.data;
   final urlRCP =
       'https:' + RegExp(r'src="(.*?)"').firstMatch(source)!.group(1)!;
 
   final urlPRORCPResponse = await Dio().get(urlRCP,
-      options: Options(headers: {'Referer': 'https://vidsrc.net/embed/$id'}));
-
+      options: Options(headers: {'Referer': 'https://vidsrc.me/embed/$id'}));
   final urlPRORCP = urlRCP.split('rcp')[0] +
       RegExp(r"src.*'(.*?)'").firstMatch(urlPRORCPResponse.data)!.group(1)!;
 
@@ -215,7 +214,6 @@ Future<String> fetchSource(id) async {
               "url": e.split("]").last.trim()
             })
         .toList();
-    print(captions);
   }
 
   var playerjsEncrypted = RegExp(r'Playerjs\({.*file:"(.*?)",.*?}\)')
@@ -246,9 +244,9 @@ Future<String> fetchSource(id) async {
 }
 
 void main() async {
-  // await fetchSource("movie?tmdb=141723");
+  await fetchSource("movie?tmdb=141723");
 
-  await fetchSource("tv?tmdb=46896&season=3&episode=1");
+  // await fetchSource("tv?tmdb=46896&season=3&episode=1");
 }
 
 // TsA2KGDGux = faild == working; == faild
@@ -261,4 +259,3 @@ void main() async {
 // sXnL9MQIry = done == working == working
 // JoAHUMCLXV = faild == working
 // KJHidj7det = faild == working == working
-

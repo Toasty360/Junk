@@ -1,7 +1,11 @@
 import axios from "axios";
 import cryptoJs from "crypto-js";
 var baseUrl = "https://moviesapi.club/";
-var secretKey = "1FHuaQhhcsKgpTRB";
+var secretKey = "=JV[t}{trEV=Ilh5"; //! Not working. Key needs to be updated.
+// https://w1.moviesapi.club/assets/js/library_v3.js --> key
+// https://w1.moviesapi.club/assets/js/library_v4.0.js --> new key
+
+const proxy = "https://pots-red.vercel.app/proxy?url=";
 
 const decrypt = (jsonStr, password) => {
   return JSON.parse(
@@ -23,34 +27,46 @@ const decrypt = (jsonStr, password) => {
 };
 
 const getSource = async (id, isMovie, s, e) => {
-  const url = baseUrl + (isMovie ? `movie/${id}` : `tv/${id}-${s}-${e}`);
-  console.log(url);
+  try {
+    const url = baseUrl + (isMovie ? `movie/${id}` : `tv/${id}-${s}-${e}`);
 
-  const iframe = (
-    await axios.get(url, {
-      headers: { Referer: baseUrl },
-    })
-  ).data.match(/<iframe.* src="(.*?)"/)[1];
+    const iframe = (
+      await axios.get(url, {
+        headers: { Referer: baseUrl },
+      })
+    ).data.match(/<iframe.* src="(.*?)"/)[1];
 
-  const jsonStr = (
-    await axios.get(iframe, { headers: { Referer: baseUrl } })
-  ).data.match(/<script type="text\/javascript">.*'(.*?)'.*<\/script>/)[1];
+    const jsonStr = (
+      await axios.get(iframe, { headers: { Referer: baseUrl } })
+    ).data.match(/<script type="text\/javascript">.*'(.*?)'.*<\/script>/)[1];
 
-  var decryptedString = decrypt(jsonStr, secretKey);
+    var decryptedString = decrypt(jsonStr, secretKey);
 
-  const sourceReg = /sources\s*:\s*(\[.*?\])/;
+    var media = {
+      sources: decryptedString.match(/sources\s*:\s*\[([^]+?)\]/)[1].trim(),
+      tracks: decryptedString.match(/tracks\s*:\s*\[([^]+?)\]/)[1].trim(),
+      thumbnails: decryptedString
+        .match(/image\s*:\s*['"]([^'"]+)['"]/)[1]
+        .trim(),
+      referer: baseUrl,
+      provider: "Movieapi.club",
+    };
+    console.log(media);
 
-  var tracksReg = /tracks\s*:\s*(\[.*?\])/;
-  var media = {
-    sources: JSON.parse(decryptedString.match(sourceReg)[1]),
-    tracks: JSON.parse(decryptedString.match(tracksReg)[1]),
-    referer: baseUrl,
-    provider: "Movieapi.club",
-  };
-  console.log(media);
+    return media;
+  } catch (error) {
+    console.log(error);
+  }
 };
 // https://moviesapi.club/tv/1399-1-2
 // https://moviesapi.club/movie/385687
-await getSource(872585, true);
+await getSource(912649, true);
 // getSource(194764, false, 1, 1);
 // getSource(124364, false, 1, 2);
+
+// console.log(
+//   proxy +
+//     encodeURIComponent(media.sources) +
+//     "&headers=" +
+//     encodeURIComponent(JSON.stringify({ referer: baseUrl }))
+// );

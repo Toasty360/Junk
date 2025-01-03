@@ -1,3 +1,5 @@
+//! Not updated. Use Js code
+
 import 'dart:convert';
 import 'package:dio/dio.dart';
 
@@ -9,7 +11,7 @@ Future<List<Map<String, String>>> extractQualityAndLinks(
       validateStatus: (status) => true,
       receiveTimeout: Duration(seconds: 3),
       headers: {
-        'Referer': "https://vidsrc.pro/",
+        'Referer': "https://embed.su/",
       },
     ),
   ))
@@ -38,46 +40,56 @@ Future<void> getSource(
   int? episode,
 }) async {
   final dio = Dio();
+  print(
+      "https://embed.su/embed/${isMovie ? 'movie/$id' : 'tv/$id/$season/$episode'}");
 
   final response = await dio.get(
-    "https://vidsrc.pro/embed/${isMovie ? 'movie/$id' : 'tv/$id/$season/$episode'}",
+    "https://embed.su/embed/${isMovie ? 'movie/$id' : 'tv/$id/$season/$episode'}",
     options: Options(
       validateStatus: (status) => true,
-      headers: {'Referer': 'https://vidsrc.pro/'},
+      headers: {'Referer': 'https://embed.su/'},
     ),
   );
   var referer = "http://" + response.realUri.host;
+  print(response.data);
   final vConfigMatch =
       RegExp(r'window\.vConfig\s*=\s*(.*?);').firstMatch(response.data);
   if (vConfigMatch == null) throw 'Pattern not found';
   var data;
+  var uwuId;
+  var name;
   if (vConfigMatch[1]!.startsWith("JSON")) {
-    data = json.decode(utf8.decode(
+    print(vConfigMatch[1]);
+    var vConfig = json.decode(utf8.decode(
         base64Decode(RegExp(r'\(`(.*)`\)').firstMatch(vConfigMatch[1]!)![1]!)));
+    uwuId = vConfig['uwuId'];
+    name = vConfig['name'];
   } else {
     data = json.decode(vConfigMatch.group(1)!);
   }
 
-  String atobString = data['hash'].split('').reversed.join('');
-  while (atobString.length % 4 != 0) {
-    atobString += '=';
-  }
-  final List decodedHash = json.decode(utf8.decode(base64Decode(atobString)));
-  final name = decodedHash[0]['name'];
-  final sourceHash = decodedHash[0]['hash'];
+  // String atobString = data;
+  // print(atobString);
+  // while (atobString.length % 4 != 0) {
+  //   atobString += '=';
+  // }
+  // final List decodedHash = json.decode(utf8.decode(base64Decode(atobString)));
+  // final name = decodedHash[0]['name'];
+  // final sourceHash = decodedHash[0]['hash'];
+  print('${referer}/api/e/$uwuId');
   final sourceResponse = await dio.get(
-    '${referer}/api/e/$sourceHash',
+    '${referer}/api/e/$uwuId',
     options: Options(
       validateStatus: (status) => true,
       headers: {
-        'Referer': referer,
+        'Referer': "https://vidsrc.pro/",
         'User-Agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
       },
     ),
   );
   final sourceData = sourceResponse.data;
-
+  print(sourceData);
   String defaultsrc = "https:/" + sourceData['source'].split(name).last;
   var links = await extractQualityAndLinks(defaultsrc, name);
 
@@ -93,7 +105,7 @@ Future<void> getSource(
 
 void main() async {
   getSource(872585, true);
-  // getSource(957452, true, season: 4, episode: 2);
+  // getSource(46896, true, season: 1, episode: 4);
 
   // var r = await Dio().get(
   //     "https://tmstr.luminousstreamhaven.com/stream_new2/H4sIAAAAAAAAAw3PwW6DIAAA0F8SqOvcbU7BYMWAAupNhMUhdibrtO3Xb5d3f8ie3YhONkk.wSsaYTSOMYIujs__vJyStylLW_mVrFNm_ejtMnRs5mjepyBmC29xlc1tBUQ.6ByVKBB.FasrAuaKEpYt0dRVh8vnh_a2lCrFFyiBkj9R7.3ToPejlrNWMBFmVcEpSm1uYaMoUMttEwEfvbTfLVSxJLjqge1tIaMKWWQ8vuqMUbWKuoQcCaTCGLa979LGZGJn0d0bLQjzHBp9X5sclAbGzHR9VH_ccnPFeVvQRjwxc.s9dcvxYFDtfEmORoVC463R5P_j57XW4LchdFd4yNqFny7PYXPkALyNkj.TTwx4QQEAAA--/master.m3u8",

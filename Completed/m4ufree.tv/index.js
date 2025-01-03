@@ -1,6 +1,16 @@
 import CryptoJS from "crypto-js";
-const baseurl = "https://ww2.m4ufree.tv";
+const baseurl = "https://m4ufree.se";
 let cookie = "";
+//!needs cors proxy.. Dont spam my proxy. Use your own proxy
+const proxy = "https://slave.nopile6577.workers.dev/cors?url=";
+const proxifyUrl = (url, headers) => {
+  let idl =
+    proxy +
+    encodeURIComponent(btoa(url)) +
+    "&headers=" +
+    btoa(JSON.stringify(headers));
+  return idl;
+};
 
 class DoSomeShit {
   encryptData(data, key) {
@@ -87,8 +97,18 @@ class DoSomeShit {
 const getSource = async (id) => {
   let shit = new DoSomeShit();
   try {
-    const response = await fetch(baseurl + id);
-    cookie = shit.formatCookies(response.headers.get("set-cookie"));
+    const response = await fetch(
+      proxifyUrl(baseurl + id, {
+        headers: {
+          Referer: baseurl,
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+        },
+      })
+    );
+
+    cookie = shit.formatCookies(response.headers.get("set-cookie") ?? "");
+
     const [link, token] = await response
       .text()
       .then((resp) => [
@@ -113,15 +133,35 @@ const getSource = async (id) => {
       .then((r) => r.match(/src=['"](.*?)['"]/)[1]);
 
     const [idfile_enc, idUser_enc, DOMAIN_API_VIEW, DOMAIN_API, captions] =
-      await (await fetch(data))
+      await (
+        await fetch(
+          proxifyUrl(data, {
+            headers: {
+              Referer: baseurl,
+              "User-Agent":
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36",
+            },
+          })
+        )
+      )
         .text()
-        .then((r) => [
-          r.match(/idfile_enc\s*=\s*['"](.*?)['"]/)[1],
-          r.match(/idUser_enc\s*=\s*['"](.*?)['"]/)[1],
-          r.match(/DOMAIN_API_VIEW\s*=\s*['"](.*?)['"]/)[1],
-          r.match(/DOMAIN_API\s*=\s*['"](.*?)['"]/)[1],
-          JSON.parse(r.match(/data_subs\s*=\s*['"](.*?)['"];/)[1]),
-        ]);
+        .then((r) => {
+          let cap = r.match(/data_subs\s*=\s*['"](.*?)['"];/)?.[1];
+          if (cap.length > 0) {
+            cap = JSON.parse(cap);
+            cap = cap.map((c) => ({
+              label: c.label,
+              file: c.file,
+            }));
+          } else cap = {};
+          return [
+            r.match(/idfile_enc\s*=\s*['"](.*?)['"]/)[1],
+            r.match(/idUser_enc\s*=\s*['"](.*?)['"]/)[1],
+            r.match(/DOMAIN_API_VIEW\s*=\s*['"](.*?)['"]/)[1],
+            r.match(/DOMAIN_API\s*=\s*['"](.*?)['"]/)[1],
+            cap,
+          ];
+        });
     let source = {
       url: await shit.extractSource(
         idfile_enc,
@@ -129,10 +169,7 @@ const getSource = async (id) => {
         DOMAIN_API_VIEW,
         DOMAIN_API
       ),
-      captions: captions.map((c) => ({
-        label: c.label,
-        url: c.file,
-      })),
+      captions: captions,
     };
     console.log(source);
   } catch (error) {
@@ -140,4 +177,4 @@ const getSource = async (id) => {
   }
 };
 
-getSource("/watch-y69ay-the-wild-robot-2024-movie-online-free-m4ufree.html");
+getSource("/watch-y6d8f-the-wild-robot-2024.html");

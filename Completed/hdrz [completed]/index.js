@@ -1,6 +1,6 @@
 import axios from "axios";
 import { load } from "cheerio";
-const base = "https://hdrezka.me/";
+const base = "https://rezka-ua.tv/";
 const getData = (x) => {
   const v = {
     file3_separator: "//_//",
@@ -23,17 +23,7 @@ const getData = (x) => {
           ),
         ""
       );
-      // console.log(
-      //   v.file3_separator +
-      //     btoa(
-      //       encodeURIComponent(v["bk" + i]).replace(
-      //         /%([0-9A-F]{2})/g,
-      //         (_, p1) => String.fromCharCode("0x" + p1)
-      //       )
-      //     )
-      // );
     }
-  console.log(a);
   try {
     a = decodeURIComponent(
       atob(a)
@@ -67,18 +57,21 @@ const main = async (id, type = "movie", _season, _episode) => {
       action: "get_movie",
     };
   }
+
   const resp = (
     await axios.post(
-      "https://hdrezka.me/ajax/get_cdn_series/?t=" + new Date().getTime,
+      "https://rezka-ua.tv/ajax/get_cdn_series/?t=" + Date.now(),
       new URLSearchParams(params).toString()
     )
   ).data;
+
   console.log({
     src: getData(resp.url),
     subtitle: resp.subtitle,
   });
 };
 
+//! Needs proper id mapping
 const getId = async (q, year, type) => {
   const resp = await (
     await axios.get(
@@ -100,7 +93,9 @@ const getId = async (q, year, type) => {
     .get();
   console.log(id);
 };
-// getId("flash", "2014", "Сериал");
+
+// getId("Requiem for a Dream", "2000", "Сериал");
 // getId("Dune: Part Two", "2024", "Фильм");
-main(62792, "movie");
-// main(42697, "tv", 2, 15);
+
+// main(2886, "movie"); //! Faild
+main(42697, "tv", 2, 15); //? success

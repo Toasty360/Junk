@@ -184,8 +184,39 @@ class videosrc {
       }
       return result;
     },
-  };
+    playerjs: (x) => {
+      try {
+        var a = x.substr(2);
+        const b1 = (str: any) =>
+          btoa(
+            encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) =>
+              String.fromCharCode(parseInt(p1, 16))
+            )
+          );
 
+        const b2 = (str) =>
+          decodeURIComponent(
+            atob(str)
+              .split("")
+              .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+              .join("")
+          );
+        a = b2(
+          [
+            "*,4).(_)()",
+            "33-*.4/9[6",
+            ":]&*1@@1=&",
+            "=(=:19705/",
+            "%?6497.[:4",
+          ].reduce((acc, k) => acc.replace("/@#@/" + `${b1(k)}`, ""), a)
+        );
+        return a;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    },
+  };
   fetchSource = async (): Promise<String> => {
     try {
       const response = await fetch("https://vidsrc.net/embed/tt1300854/");
@@ -206,6 +237,10 @@ class videosrc {
       })
         .then((resp) => resp.text())
         .then((text) => {
+          var temp = text.match(/Playerjs\({.*file:"(.*?)",.*?}\)/)?.[1];
+          if (temp != undefined && temp != "") {
+            return { id: "playerjs", content: temp };
+          }
           const $ = load(text);
           const node = $("#reporting_content").next();
           return { id: node.attr("id")!, content: node.text() };
