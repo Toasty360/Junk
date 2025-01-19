@@ -55,7 +55,6 @@ Future<void> getSource(
   final vConfigMatch =
       RegExp(r'window\.vConfig\s*=\s*(.*?);').firstMatch(response.data);
   if (vConfigMatch == null) throw 'Pattern not found';
-  var data;
   var uwuId;
   var name;
   if (vConfigMatch[1]!.startsWith("JSON")) {
@@ -64,9 +63,7 @@ Future<void> getSource(
         base64Decode(RegExp(r'\(`(.*)`\)').firstMatch(vConfigMatch[1]!)![1]!)));
     uwuId = vConfig['uwuId'];
     name = vConfig['name'];
-  } else {
-    data = json.decode(vConfigMatch.group(1)!);
-  }
+  } else {}
 
   // String atobString = data;
   // print(atobString);

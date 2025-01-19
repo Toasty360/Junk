@@ -2,6 +2,7 @@ import CryptoJS from "crypto-js";
 const baseurl = "https://m4ufree.se";
 let cookie = "";
 //!needs cors proxy.. Dont spam my proxy. Use your own proxy
+//! maybe this thing is not working
 const proxy = "https://slave.nopile6577.workers.dev/cors?url=";
 const proxifyUrl = (url, headers) => {
   let idl =

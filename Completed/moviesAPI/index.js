@@ -4,10 +4,13 @@ var baseUrl = "https://moviesapi.club/";
 var secretKey = "=JV[t}{trEV=Ilh5"; //! Not working. Key needs to be updated.
 // https://w1.moviesapi.club/assets/js/library_v3.js --> key
 // https://w1.moviesapi.club/assets/js/library_v4.0.js --> new key
+// https://w1.moviesapi.club/assets/js/library_v2.5.js --> new new key? WTH
 
 const proxy = "https://pots-red.vercel.app/proxy?url=";
 
 const decrypt = (jsonStr, password) => {
+  console.log(jsonStr);
+
   return JSON.parse(
     cryptoJs.AES.decrypt(jsonStr, password, {
       format: {
