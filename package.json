@@ -5,8 +5,7 @@
   "type": "module",
   "main": "dramacool.js",
   "scripts": {
-    "dev": "nodemon completed/onionplay/api.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon completed/onionplay/api.js"
   },
   "author": "",
   "license": "ISC",
