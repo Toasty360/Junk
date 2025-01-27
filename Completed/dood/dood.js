@@ -1,7 +1,7 @@
 //c8nlik7frb4l21nr014vvtwi
 const baseurl = "https://d0000d.com/";
 
-function makePlay() {
+function makePlay(token) {
   for (
     var a = "",
       t = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
@@ -14,7 +14,7 @@ function makePlay() {
 
   //? maybe token is dynamically generated. need to check.
   //! It has Cloudflare Turnstile.
-  return a + "?token=urcodesucks&expiry=" + Date.now();
+  return a + `?token=${token}&expiry=` + Date.now();
 }
 
 const fetchData = async (id) => {
@@ -26,6 +26,9 @@ const fetchData = async (id) => {
       },
     })
   ).text();
+
+  console.log(/function\s+makePlay\(\)\s*{[^}]*}/.exec(resp)[0]);
+
   eval(/function\s+makePlay\(\)\s*{[^}]*}/.exec(resp)[0]);
   fetch(
     baseurl + "/pass_md5/" + /\$.get\('\/pass_md5\/([^']+)'/.exec(resp)[1],
@@ -38,7 +41,7 @@ const fetchData = async (id) => {
     .then((r) => r.text())
     .then((data) => {
       console.log({
-        src: data + makePlay(),
+        src: data + makePlay(resp.match(/['"]\?token=(.*?)\&.*['"]/)[1]),
         Referer: baseurl,
       });
     });

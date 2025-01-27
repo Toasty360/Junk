@@ -20,10 +20,13 @@
     "hashids": "^2.3.0",
     "jsdom": "^25.0.1",
     "nodemon": "^3.1.7",
+    "pako": "^2.1.0",
     "puppeteer-core": "^23.6.0",
     "tsc": "^2.0.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   }

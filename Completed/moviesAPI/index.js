@@ -1,32 +1,50 @@
+//! incomplete
 import axios from "axios";
 import cryptoJs from "crypto-js";
 var baseUrl = "https://moviesapi.club/";
-var secretKey = "=JV[t}{trEV=Ilh5"; //! Not working. Key needs to be updated.
+var secretKey = "3%.tjS0K@K9{9rTc"; //!Key updated.
 // https://w1.moviesapi.club/assets/js/library_v3.js --> key
 // https://w1.moviesapi.club/assets/js/library_v4.0.js --> new key
 // https://w1.moviesapi.club/assets/js/library_v2.5.js --> new new key? WTH
+// https://w1.moviesapi.club/assets/js/library_v6.2.js --> new new new key
 
 const proxy = "https://pots-red.vercel.app/proxy?url=";
 
 const decrypt = (jsonStr, password) => {
-  console.log(jsonStr);
+  const decryptedData = cryptoJs.AES.decrypt(jsonStr, password, {
+    format: {
+      parse: (jsonStr) => {
+        const j = JSON.parse(jsonStr);
+        console.log(j.iv, j.salt, j.mac);
 
-  return JSON.parse(
-    cryptoJs.AES.decrypt(jsonStr, password, {
-      format: {
-        parse: (jsonStr) => {
-          var j = JSON.parse(jsonStr);
+        // Prepare the cipherParams object
+        const cipherParams = cryptoJs.lib.CipherParams.create({
+          ciphertext: cryptoJs.enc.Base64.parse(j.data),
+        });
 
-          var cipherParams = cryptoJs.lib.CipherParams.create({
-            ciphertext: cryptoJs.enc.Base64.parse(j.ct),
-          });
-          if (j.iv) cipherParams.iv = cryptoJs.enc.Hex.parse(j.iv);
-          if (j.s) cipherParams.salt = cryptoJs.enc.Hex.parse(j.s);
-          return cipherParams;
-        },
+        // Include iv, salt, and mac if they exist
+        if (j.iv) cipherParams.iv = cryptoJs.enc.Hex.parse(j.iv);
+        if (j.salt) cipherParams.salt = cryptoJs.enc.Hex.parse(j.salt);
+        if (j.mac) cipherParams.mac = cryptoJs.enc.Hex.parse(j.mac);
+
+        // Verify the MAC (Message Authentication Code)
+        if (j.mac) {
+          const computedMac = cryptoJs.HmacSHA256(
+            cipherParams.ciphertext,
+            password
+          );
+          if (!cryptoJs.enc.Hex.parse(j.mac).words === computedMac.words) {
+            throw new Error("MAC validation failed.");
+          }
+        }
+
+        return cipherParams;
       },
-    }).toString(cryptoJs.enc.Utf8)
-  );
+    },
+  });
+
+  // Return the decrypted JSON string
+  return JSON.parse(decryptedData.toString(cryptoJs.enc.Utf8));
 };
 
 const getSource = async (id, isMovie, s, e) => {
@@ -43,7 +61,7 @@ const getSource = async (id, isMovie, s, e) => {
       await axios.get(iframe, { headers: { Referer: baseUrl } })
     ).data.match(/<script type="text\/javascript">.*'(.*?)'.*<\/script>/)[1];
 
-    var decryptedString = decrypt(jsonStr, secretKey);
+    var decryptedString = decrypt(atob(jsonStr), secretKey);
 
     var media = {
       sources: decryptedString.match(/sources\s*:\s*\[([^]+?)\]/)[1].trim(),
