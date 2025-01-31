@@ -19,6 +19,7 @@
     "express": "^4.21.1",
     "hashids": "^2.3.0",
     "jsdom": "^25.0.1",
+    "libsodium-wrappers": "^0.7.15",
     "nodemon": "^3.1.7",
     "pako": "^2.1.0",
     "puppeteer-core": "^23.6.0",

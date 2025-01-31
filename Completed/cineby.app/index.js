@@ -22,16 +22,15 @@ const options = {
 };
 
 const getKey = async (x) => {
-  let e = x + "7a3d4f1ab3199649";
+  let e = x + "ef5e8e762119f09dc842b6a36cba75b2";
   let t = (e) => e.split("").map((e) => e.charCodeAt(0));
   let key = e
     .split("")
     .map(t)
     .map((e) =>
-      t("5817deea68d131de99b8841851dea89b3462b1dfa5a4f98ee4f8").reduce(
-        (e, t) => e ^ t,
-        e
-      )
+      t(
+        "3c5b6632046a4947ced0bc316ebb1e5583047e32ea76f61b93eee93cf9e4dfe2"
+      ).reduce((e, t) => e ^ t, e)
     )
     .map((e) => ("0" + Number(e).toString(16)).substr(-2))
     .join("");
@@ -113,10 +112,11 @@ const main = async (encoded, id) => {
 export default main;
 const getData = async () => {
   const resp = await fetch(
-    "https://api.cineby.app/primewire/sources-with-title?title=Back%2520in%2520Action&mediaType=movie&year=2025&episodeId=1&seasonId=1&tmdbId=993710&imdbId=tt21191806",
+    "https://api.cineby.app/myflixerzupcloud/sources-with-title?title=Nosferatu&mediaType=movie&year=2024&episodeId=1&seasonId=1&tmdbId=426063&imdbId=tt5040012",
     options
   );
   const encodedData = await resp.text();
-  return main(encodedData, "993710");
+
+  return main(encodedData, "426063");
 };
 console.log(await getData());
