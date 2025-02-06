@@ -4,6 +4,7 @@ var var25;
 var var4;
 var r;
 var mG;
+
 function _0x110c85(_0x21b8ea, _0xb9fac8) {
   var _0x3caa75 = 0;
   for (
@@ -15,6 +16,7 @@ function _0x110c85(_0x21b8ea, _0xb9fac8) {
   }
   return _0x3caa75 >>> 0;
 }
+
 function _0xc6bd9f(_0x4b3551, _0xaefdf6, _0x4947a3) {
   for (var _0xe16312 = 3; _0xe16312 > -1; _0xe16312--) {
     var _0x507ec8 = _0xaefdf6 >>> (_0xe16312 * 8);
@@ -23,10 +25,12 @@ function _0xc6bd9f(_0x4b3551, _0xaefdf6, _0x4947a3) {
   }
   return _0x4b3551;
 }
+
 function _0x4f7d09(_0xba6f9b, _0x5b0934) {
   var _0x45daf1 = (_0xba6f9b << _0x5b0934) | (_0xba6f9b >>> (32 - _0x5b0934));
   return _0x45daf1 >>> 0;
 }
+
 function _0x37a4b7(_0xac8eb8, _0x474778, _0x1e627d) {
   var _0x5c0571 = _0x110c85(_0x1e627d, 12);
   var _0x1b2d60 = _0x110c85(_0x474778, 12);
@@ -219,6 +223,7 @@ function _0x5c1c55(_0x239a54, _0x17b13f, _0x634081, _0x5ce270, _0xbb83f3) {
 }
 
 let var2;
+
 function getKey(_0x22c1b4, _0x43aad3, _0xb05c11) {
   var _0x4724cb = 7;
   var _0x133d47 = 12;
@@ -1310,32 +1315,32 @@ export const Decrypt = (encrypted, iv, a, s) => {
   return JSON.parse(JSON.parse(decrypted.toString(CryptoJS.enc.Utf8)));
 };
 
-// export const test = (ct, hash, iv, s) => {
-//   var config = {
-//     format: format,
-//   };
-//   const salt = CryptoJS.enc.Hex.parse(s);
-//   const keySize = 128 / 32;
+export const test = (ct, hash, iv, s) => {
+  var config = {
+    format: format,
+  };
+  const salt = CryptoJS.enc.Hex.parse(s);
+  const keySize = 128 / 32;
 
-//   const derivedKey = CryptoJS.PBKDF2(hash, salt, {
-//     keySize: keySize,
-//     iterations: 0,
-//     hasher: CryptoJS.algo.SHA256,
-//   });
+  const derivedKey = CryptoJS.PBKDF2(hash, salt, {
+    keySize: keySize,
+    iterations: 0,
+    hasher: CryptoJS.algo.SHA256,
+  });
 
-//   console.log(
-//     "Derived Key (Base64):",
-//     CryptoJS.enc.Base64.stringify(derivedKey)
-//   );
+  console.log(
+    "Derived Key (Base64):",
+    CryptoJS.enc.Base64.stringify(derivedKey)
+  );
 
-//   var decrypted = CryptoJS.AES.decrypt(
-//     atob(ct),
-//     CryptoJS.enc.Base64.stringify(derivedKey),
-//     config
-//   );
-//   var data = JSON.parse(JSON.parse(decrypted.toString(CryptoJS.enc.Utf8)));
-//   console.log(data);
-// };
+  var decrypted = CryptoJS.AES.decrypt(
+    atob(ct),
+    CryptoJS.enc.Base64.stringify(derivedKey),
+    config
+  );
+  var data = JSON.parse(JSON.parse(decrypted.toString(CryptoJS.enc.Utf8)));
+  console.log(data);
+};
 // try {
 //   test(
 //     "eyJjdCI6Ikp2TzRTMXZ1QkVJdzFwTTNTcjY2d3Z4M2lsOXR0ZHQyQVA0K3JTMFVTdlNYU3B0OCtGMXZJSndGb21hdTVSTFBvclpIYm8yQU0wUUFpRUNZUVY0bUhDVXVkZlwvUWw5M3ZFMHhQTWI5bW1CYWxXRTIxM3VTa3Q1WDdjKzhrQkVEaXJUcVBGb0JcL05cL3hVcjVlYjExZUs1eHRsREFvMXhVZ2J2QzNTelI0Nkd4QjRtaUFIN2xqa1VXeitXV01HV2o0XC96MklORlBJU1Vwc2gxbWU2bHZkdEh4ajQyU2ZmNk9ZMjZWT2Z5S1BRU25RYkJPNzk0b0xFc051K3dkTmhHYXJkXC8zYWYxbG84a0NCUTAyRTgzWGZBd0RRczFzRlM0YVRMQ2ViN3E3UWZreXd2RTRqKzh2QVZhT1BhdmdNTXpqcGM0Tk9uMk5RdG9wUVBZMjVRUFlrcHp1Q3Ercyt0Rm9LN3dLVWV3VmdKUlVIbmM5V3B5TlY3VXIwR1M1ekNvaXRkYkFVY1wvdnRCaFNtNkl4WGphNHBqeVJTczlBdDloaFVtT01ZanlkVjRsRkRsY3JvYk4rTjdUeEE2MFdiY3RLTlRyZkxueTl1Mlp6TEJQNzcwbWxOc3crYzZuVEt2Mkc5RVBvbmhYcitKdDVPbDJsMHRaSVBqdHZhbXB1OXRtQ3kyWkFTNzh6V1JOQnhYYW43R3F3SmFLaXpcL1BMY2NJYU9iNUp0K2tZSWJ4dG5DaWhHM1FPWkt4aW1QdTJqbmgrUU5yOFcyV05xeXptVHE0dmNPWVJDUGhESlNKSVJNVUtEbjRaQjhtUFVNM3VwM0t4RTFId0lPM0xLTGppa0ZIcHVCejg1N24zSEhqaXBOcFZxekRNTzBGdz09IiwiaXYiOiIyMTQwMGJmODVjMTFlNjE1OGNkMTE1YTVkZTQ3YzBjNSIsInMiOiIxOGNiZDlmM2I0NTNjNWMxIn0=",

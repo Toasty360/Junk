@@ -16,6 +16,13 @@ const headers = {
   Referer: "https://ww.bmovies.vip/",
 };
 
+// const getKey = (iv, a, s) => {
+//   const key = CryptoJS.enc.Hex.parse(a);
+//   const salt = CryptoJS.enc.Hex.parse(s);
+//   const iv = CryptoJS.enc.Hex.parse(iv);
+//   return CryptoJS.PBKDF2(key, salt, { keySize: 8, iterations: 1000 });
+// };
+
 const getSources = async (server) => {
   const { src } = await (
     await fetch(
@@ -61,6 +68,8 @@ const getSources = async (server) => {
       { format }
     ).toString()
   );
+  // console.log(s.hash);
+
   let media = await (
     await fetch(
       `https://fstream365.com/ajax/getSources/?id=${hex(encrypted.ct)}&h=${hex(
@@ -74,6 +83,7 @@ const getSources = async (server) => {
       }
     )
   ).json();
+
   media = {
     ...media,
     sources: Decrypt(media.sources, encrypted.iv, 0, encrypted.s),
@@ -110,4 +120,4 @@ const main = async (id, episode) => {
   return getSources(server);
 };
 
-main("72172", "2_2");
+console.log(await main("72172", "2_2"));

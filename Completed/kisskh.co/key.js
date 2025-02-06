@@ -41,6 +41,7 @@ function encryptBlock(_0x13a508, _0x5baaa1) {
       : _0x13a508.slice(_0x5baaa1 - 4, _0x5baaa1);
   for (let _0x5b9637 = 0; _0x5b9637 < 4; _0x5b9637++)
     _0x13a508[_0x5baaa1 + _0x5b9637] ^= _0x21ba3f[_0x5b9637];
+
   for (
     var _0x116405 = 10,
       _0x4d3231 = _0x13a508[_0x5baaa1] ^ _0x458390[0],
@@ -134,6 +135,11 @@ export default function getKey(id, version) {
   data.splice(1, 0, calculateHash(data.join("|")));
   const _0x278f64 = padString(data.join("|"));
   const [_0x3db385, _0x2f9d88] = stringToWordArray(_0x278f64);
+
   processBlock(_0x3db385);
+  console.log(_0x3db385);
+
   return wordArrayToHex(_0x3db385, _0x2f9d88).toUpperCase();
 }
+
+console.log(getKey(1234));

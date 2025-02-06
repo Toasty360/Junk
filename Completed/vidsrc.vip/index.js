@@ -1,4 +1,4 @@
-//! fking maggets
+//! https://hydrahd.me/
 const hydrogen = (id) => {
   const map = "abcdefghij";
   return id

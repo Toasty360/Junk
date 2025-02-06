@@ -21,6 +21,7 @@ const options = {
   mode: "cors",
 };
 
+//page
 const getKey = async (x) => {
   let e = x + "ef5e8e762119f09dc842b6a36cba75b2";
   let t = (e) => e.split("").map((e) => e.charCodeAt(0));

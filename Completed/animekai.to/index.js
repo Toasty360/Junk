@@ -121,7 +121,7 @@ const getSources = async (id) => {
     decoder.decode_iframe_data(result).replace(/\\/gm, "")
   );
   url = url.replace(/\/(e|e2)\//, "/media/");
-
+  console.log(url);
   const sources = await fetch(url, { headers })
     .then((r) => r.json())
     .then((r) => decoder.decode(r.result).replace(/\\/gm, ""));
